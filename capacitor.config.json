@@ -1,0 +1,9 @@
+{
+  "appId": "com.cleantrack.bookingapp",
+  "appName": "Cleaning Service Booking App",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}

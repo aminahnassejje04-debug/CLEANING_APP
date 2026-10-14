@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
 export const PWAInstallButton: React.FC = () => {
-  const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
+  const { isInstallable, isInstalled, install } = usePWAInstall();
   const [showGuide, setShowGuide] = useState(false);
+  const [activeTab, setActiveTab] = useState<'usb' | 'browser'>('usb');
 
-  // If already running inside installed standalone app, hide install trigger
   if (isInstalled) {
     return (
       <span className="text-[10px] bg-emerald-900 text-emerald-200 px-2 py-0.5 rounded font-semibold">
@@ -29,17 +29,18 @@ export const PWAInstallButton: React.FC = () => {
           onClick={() => setShowGuide(true)}
           className="text-xs bg-emerald-900 text-emerald-100 hover:text-white px-2 py-1 rounded font-medium border border-emerald-700 cursor-pointer transition-colors"
         >
-          Install
+          Install / USB
         </button>
       )}
 
-      {/* Mobile Install Guide Dialog */}
+      {/* Installation Guide Dialog */}
       {showGuide && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="w-full max-w-sm rounded-xl bg-white p-5 shadow-xl text-xs space-y-3">
+          <div className="w-full max-w-sm rounded-xl bg-white p-5 shadow-xl text-xs space-y-3 max-h-[90vh] overflow-y-auto">
+            {/* Header */}
             <div className="flex items-center justify-between border-b pb-2">
               <h3 className="text-sm font-bold text-slate-900">
-                Install on Your Mobile Phone
+                Install on Phone
               </h3>
               <button
                 onClick={() => setShowGuide(false)}
@@ -49,37 +50,95 @@ export const PWAInstallButton: React.FC = () => {
               </button>
             </div>
 
-            <p className="text-slate-600 leading-relaxed">
-              This app is a compliant <strong>Progressive Web App (PWA)</strong> that installs directly to your home screen like a native mobile app.
-            </p>
-
-            {/* Android / Chrome Guide */}
-            <div className="bg-slate-50 p-2.5 rounded border border-slate-200">
-              <div className="font-bold text-slate-800 mb-1">Android (Chrome / Edge / Firefox):</div>
-              <ol className="list-decimal list-inside space-y-1 text-slate-600">
-                <li>Open this app in your mobile browser.</li>
-                <li>Tap the browser menu (<strong>3 dots &vellip;</strong> in top right).</li>
-                <li>Tap <strong>&ldquo;Install app&rdquo;</strong> or <strong>&ldquo;Add to Home screen&rdquo;</strong>.</li>
-              </ol>
+            {/* Tabs: USB vs Browser */}
+            <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-lg">
+              <button
+                onClick={() => setActiveTab('usb')}
+                className={`py-1.5 text-xs font-bold rounded transition-colors cursor-pointer ${
+                  activeTab === 'usb'
+                    ? 'bg-emerald-800 text-white'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                🔌 Via USB Cable
+              </button>
+              <button
+                onClick={() => setActiveTab('browser')}
+                className={`py-1.5 text-xs font-bold rounded transition-colors cursor-pointer ${
+                  activeTab === 'browser'
+                    ? 'bg-emerald-800 text-white'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                🌐 Via Browser Link
+              </button>
             </div>
 
-            {/* iPhone / Safari Guide */}
-            <div className="bg-slate-50 p-2.5 rounded border border-slate-200">
-              <div className="font-bold text-slate-800 mb-1">iPhone / iPad (Safari):</div>
-              <ol className="list-decimal list-inside space-y-1 text-slate-600">
-                <li>Open this app in <strong>Safari</strong>.</li>
-                <li>Tap the <strong>Share</strong> button (box with upward arrow).</li>
-                <li>Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong>.</li>
-              </ol>
-            </div>
+            {/* TAB 1: USB Installation Steps */}
+            {activeTab === 'usb' && (
+              <div className="space-y-2.5">
+                <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-200 text-emerald-900 space-y-1.5">
+                  <div className="font-bold text-xs">Direct USB Installation Steps:</div>
+                  <ol className="list-decimal list-inside space-y-1 text-slate-700">
+                    <li>
+                      <strong>Plug your phone into your computer</strong> using a USB cable.
+                    </li>
+                    <li>
+                      On your phone, enable <strong>USB Debugging</strong> (go to <em>Settings &gt; Developer Options &gt; USB Debugging &rarr; Turn ON</em>).
+                    </li>
+                    <li>
+                      On your computer's Chrome browser, open:
+                      <div className="bg-white p-1 rounded font-mono text-[10px] my-0.5 border select-all text-slate-800">
+                        chrome://inspect/#devices
+                      </div>
+                    </li>
+                    <li>
+                      Click <strong>&ldquo;Port forwarding...&rdquo;</strong>, enter Port <code>3000</code> mapped to <code>localhost:3000</code>.
+                    </li>
+                    <li>
+                      On your phone's browser, open <strong>http://localhost:3000</strong>.
+                    </li>
+                    <li>
+                      Tap <strong>&ldquo;Install App&rdquo;</strong> &mdash; the app installs directly onto your phone screen via USB!
+                    </li>
+                  </ol>
+                </div>
 
-            {/* GitHub Deployment note */}
-            <div className="bg-emerald-50 p-2.5 rounded border border-emerald-200 text-emerald-900">
-              <div className="font-bold mb-0.5">Using via GitHub:</div>
-              <p className="text-[11px] leading-relaxed">
-                When you push this repository to GitHub and enable <strong>GitHub Pages</strong> (or host on Vercel/Netlify/Cloud Run), open your live site link on any phone to install it immediately with offline support and local storage!
-              </p>
-            </div>
+                <div className="bg-slate-50 p-2.5 rounded border border-slate-200 text-slate-600">
+                  <div className="font-bold text-slate-800 mb-0.5">Android Native CLI (Capacitor/ADB):</div>
+                  <p className="text-[11px] leading-relaxed">
+                    You can also build directly to your USB-connected device:
+                  </p>
+                  <pre className="bg-slate-900 text-emerald-300 p-2 rounded mt-1 font-mono text-[10px] overflow-x-auto">
+npm run build
+npx cap run android
+                  </pre>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 2: Browser / GitHub Link Installation */}
+            {activeTab === 'browser' && (
+              <div className="space-y-2">
+                <div className="bg-slate-50 p-2.5 rounded border border-slate-200">
+                  <div className="font-bold text-slate-800 mb-1">Android (Chrome / Edge):</div>
+                  <ol className="list-decimal list-inside space-y-1 text-slate-600">
+                    <li>Open your live link in Chrome on your phone.</li>
+                    <li>Tap the <strong>3 dots (&vellip;)</strong> menu.</li>
+                    <li>Tap <strong>&ldquo;Install app&rdquo;</strong> or <strong>&ldquo;Add to Home screen&rdquo;</strong>.</li>
+                  </ol>
+                </div>
+
+                <div className="bg-slate-50 p-2.5 rounded border border-slate-200">
+                  <div className="font-bold text-slate-800 mb-1">iPhone / iPad (Safari):</div>
+                  <ol className="list-decimal list-inside space-y-1 text-slate-600">
+                    <li>Open your live link in Safari.</li>
+                    <li>Tap the <strong>Share</strong> button (box with upward arrow).</li>
+                    <li>Tap <strong>&ldquo;Add to Home Screen&rdquo;</strong>.</li>
+                  </ol>
+                </div>
+              </div>
+            )}
 
             {isInstallable && (
               <button
