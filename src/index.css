@@ -4,5 +4,6 @@
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     @apply bg-slate-50 text-slate-800 antialiased min-h-screen;
+    -webkit-tap-highlight-color: transparent;
   }
 }
