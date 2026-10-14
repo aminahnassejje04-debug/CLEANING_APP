@@ -1,0 +1,6 @@
+{
+  "name": "Cleaning Service Booking App",
+  "description": "Organize client details, schedule cleaning appointments, track booking statuses, calculate expected earnings, and get intelligent cleaning job estimates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
