@@ -1,6 +1,5 @@
 import React from 'react';
 import { ActivePage } from '../types';
-import { PWAInstallButton } from './PWAInstallButton';
 
 interface NavbarProps {
   activePage: ActivePage;
@@ -49,9 +48,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* PWA Install Button */}
-            <PWAInstallButton />
-
             {/* Currency selector */}
             <select
               aria-label="Currency"

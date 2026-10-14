@@ -126,19 +126,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </button>
       </div>
 
-      {/* Mobile Install & Offline Info Card */}
-      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs flex items-center justify-between gap-2">
-        <div>
-          <span className="font-bold text-emerald-900 block">Install as Mobile App</span>
-          <span className="text-emerald-700 text-[11px] block mt-0.5">
-            Works offline &bull; Tap &ldquo;Install&rdquo; in top bar or browser menu
-          </span>
-        </div>
-        <span className="text-[10px] font-bold bg-emerald-800 text-white px-2 py-1 rounded shrink-0">
-          PWA Ready
-        </span>
-      </div>
-
       {/* Status Breakdown Section */}
       <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
         <div className="flex items-center justify-between">

@@ -23,6 +23,7 @@ import { BookingModal } from './components/BookingModal';
 import { ClientModal } from './components/ClientModal';
 import { BookingDetailsModal } from './components/BookingDetailsModal';
 import { ConfirmModal } from './components/ConfirmModal';
+import { AutoInstallPrompt } from './components/AutoInstallPrompt';
 
 export default function App() {
   const [activePage, setActivePage] = useState<ActivePage>('dashboard');
@@ -285,6 +286,9 @@ export default function App() {
     <div className="min-h-screen bg-slate-200 flex flex-col justify-center items-center font-sans antialiased">
       {/* Mobile-Only Device Frame */}
       <div className="w-full max-w-md min-h-screen bg-slate-50 flex flex-col relative pb-16 shadow-md border-x border-slate-300">
+        {/* Auto-Prompt Phone Installation on Link Open */}
+        <AutoInstallPrompt />
+
         {/* Simple Toast Notification */}
         {toastMessage && (
           <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-sm">
