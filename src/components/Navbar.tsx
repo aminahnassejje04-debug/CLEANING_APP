@@ -8,7 +8,7 @@ interface NavbarProps {
   clientCount: number;
   currency: string;
   onChangeCurrency: (c: string) => void;
-  onResetData: () => void;
+  onResetData?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -48,33 +48,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Currency selector */}
+            {/* Currency selector - UGX and USD only */}
             <select
               aria-label="Currency"
               value={currency}
               onChange={(e) => onChangeCurrency(e.target.value)}
-              className="bg-emerald-900 text-white text-xs font-semibold px-2 py-1.5 rounded border border-emerald-700 focus:outline-hidden cursor-pointer"
+              className="bg-emerald-900 text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-emerald-700 focus:outline-hidden cursor-pointer"
             >
               <option value="UGX">UGX</option>
               <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="KES">KES</option>
             </select>
-
-            {/* Reset sample data */}
-            <button
-              onClick={onResetData}
-              title="Reset data"
-              className="text-xs bg-emerald-700 hover:bg-emerald-600 text-white px-2 py-1.5 rounded font-medium transition-colors cursor-pointer"
-            >
-              Reset
-            </button>
           </div>
         </div>
       </header>
 
       {/* Mobile Fixed Bottom Navigation Bar - Plain 4 Tabs */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 max-w-md mx-auto">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 w-full max-w-xl sm:max-w-2xl mx-auto">
         <div className="grid grid-cols-4 text-center py-1.5">
           {/* Tab 1: Dashboard */}
           <button

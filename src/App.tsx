@@ -284,8 +284,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-200 flex flex-col justify-center items-center font-sans antialiased">
-      {/* Mobile-Only Device Frame */}
-      <div className="w-full max-w-md min-h-screen bg-slate-50 flex flex-col relative pb-16 shadow-md border-x border-slate-300">
+      {/* Mobile-Only Device Frame with increased width */}
+      <div className="w-full max-w-xl sm:max-w-2xl min-h-screen bg-slate-50 flex flex-col relative pb-16 shadow-md border-x border-slate-300">
         {/* Auto-Prompt Phone Installation on Link Open */}
         <AutoInstallPrompt />
 
@@ -306,7 +306,6 @@ export default function App() {
           clientCount={clients.length}
           currency={currency}
           onChangeCurrency={handleCurrencyChange}
-          onResetData={handlePromptReset}
         />
 
         {/* Mobile Main Content Screen */}
